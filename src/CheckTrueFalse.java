@@ -150,8 +150,19 @@ public class CheckTrueFalse {
 						
 		//testing
 		System.out.println("I don't know if the statement is definitely true or definitely false.");
+		HashMap<String, Boolean> symbols = getAllSymbols(knowledge_base, statement);
 		
-		
+		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
+			int temp = i;
+			for (String sym : symbols.keySet()) {
+				symbols.replace(sym, temp%2 != 0);
+				temp >>= 1;
+			}
+			for (String sym : symbols.keySet()) {
+				System.out.print(sym + " " + symbols.get(sym) + " ");
+			}
+			System.out.println("");
+		}
 
 	} //end of main
 
