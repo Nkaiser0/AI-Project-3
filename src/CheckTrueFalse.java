@@ -535,7 +535,10 @@ public class CheckTrueFalse {
     //returns true if our knowledgebase and statement are true with the given set of boolean assignments
     //otherwise returns false
     public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean> booleanAssignments) {
-    	return (isLogicalExpressionTrue(kb, booleanAssignments) && isLogicalExpressionTrue(statement, booleanAssignments));
+    	if(!isLogicalExpressionTrue(kb, booleanAssignments)) {
+    		return true;
+    	}
+    	return (isLogicalExpressionTrue(statement, booleanAssignments));
     }
     
     //returns true if the logical expression is true for the given set of symbols
