@@ -1,11 +1,32 @@
 # This is all the wumpus rules
 
-#If there is a monster at square (i,j), there is stench at all adjacent squares.
-#If there is stench at square (i,j), there is a monster at one of the adjacent squares.
-#If there is a pit at square (i,j), there is breeze at all adjacent squares.
-#If there is breeze at square (i,j), there is a pit at one or more of the adjacent squares.
-#There is one and only one monster (no more, no fewer) and the monster cannot move.
+# if there is a monster at square (i,j), there is stench at all adjacent squares.
+
+
+# If there is stench at square (i,j), there is a monster at one of the adjacent squares.
+
+
+# If there is a pit at square (i,j), there is breeze at all adjacent squares.
+
+
+# If there is breeze at square (i,j), there is a pit at one or more of the adjacent squares.
+
+
+# There is one and only one monster (no more, no fewer) and the monster cannot move.
+(xor M_1_1 M_1_2 M_1_3 M_1_4 M_2_1 M_2_2 M_2_3 M_2_4 M_3_1 M_3_2 M_3_3 M_3_4 M_4_1 M_4_2 M_4_3 M_4_4)
+
 #Squares (1,1), (1,2), (2,1), (2,2) have no monsters and no pits.
-#The number of pits can be between 1 and 11, such that there exist at least one safe square to explore other than the first four squares.
-#The monster can stay at a square where there exists a pitfall.
-#We don't care about gold, glitter, and arrows, there will be no information about them in the knowledge base,  and no reference to them in the statement.
+(not M_1_1)
+(not M_1_2)
+(not M_2_1)
+(not M_2_2)
+(not P_1_1)
+(not P_1_2)
+(not P_2_1)
+(not P_2_2)
+
+# The number of pits can be between 1 and 11, such that there exist at least one safe square to explore other than the first four squares.
+
+# The monster can stay at a square where there exists a pitfall.
+
+# We don't care about gold, glitter, and arrows, there will be no information about them in the knowledge base,  and no reference to them in the statement.
