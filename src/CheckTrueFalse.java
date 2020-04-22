@@ -95,7 +95,7 @@ public class CheckTrueFalse {
 		}
 		//end reading additional knowledge
 		
-		
+		knowledge_base.setConnective("and");
 		// check for a valid knowledge_base
 		if( !valid_expression( knowledge_base ) ) {
 			System.out.println("invalid knowledge base");
@@ -459,5 +459,16 @@ public class CheckTrueFalse {
         private static void exit_function(int value) {
                 System.out.println("exiting from checkTrueFalse");
                   System.exit(value);
-                }	
+                }
+    public static boolean entails_statement(LogicalExpression kb, LogicalExpression statement, HashMap booleanAssignments) {
+    	
+    	return false;
+    }
+    
+    public static boolean is_knowledgebase_true(LogicalExpression kb, HashMap<String, Boolean> symbols) {
+    	if(kb.getConnective() == null) {
+    		return symbols.get(kb.getUniqueSymbol());
+    	}
+    	return false;
+    }
 }
