@@ -149,7 +149,27 @@ public class CheckTrueFalse {
 		System.out.println("\n");
 						
 		//testing
-		System.out.println("I don't know if the statement is definitely true or definitely false.");
+		
+		boolean entailsStatement = true;
+		boolean entailsInverseStatement = false;
+
+		// Definitly True
+		if ( entailsStatement && !entailsInverseStatement ) {
+		    System.out.println("definitely true:\nThis should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.");
+		}
+		// Definitly False
+		if ( !entailsStatement && ntailsInverseStatement ) {
+		    System.out.println("definitely false:\nThis should be the output if the knowledge base entails the negation of the statement, and the knowledge base does not entail the statement.");
+		}
+		// Possibly True of False
+		if ( !entailsStatement && !entailsInverseStatement ) {
+		    System.out.println("possibly true, possibly false:\nThis should be the output if the knowledge base entails neither the statement nor the negation of the statement.");
+		}
+		// True and False
+		if ( entailsStatement && entailsInverseStatement ) {
+		    System.out.println("both true and false: This should be the output if the knowledge base entails both the statement and the negation of the statement.");
+		}
+		System.out.println("Error?");
 		
 		
 
