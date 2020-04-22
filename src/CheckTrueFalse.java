@@ -502,13 +502,47 @@ public class CheckTrueFalse {
                 }
         
     public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean> booleanAssignments) {
-    	
-    	return false;
+    	return (isLogicalExpressionTrue(kb, booleanAssignments) && isLogicalExpressionTrue(statement, booleanAssignments));
     }
     
-    public static boolean is_knowledgebase_true(LogicalExpression kb, HashMap<String, Boolean> symbols) {
+    public static boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean> symbols) {
     	if(kb.getConnective() == null) {
     		return symbols.get(kb.getUniqueSymbol());
+    	}
+    	switch(kb.getConnective()) {
+    		case "and":
+    			for(LogicalExpression expression : kb.getSubexpressions()) {
+    				if(!isLogicalExpressionTrue(expression, symbols)) {
+    					return false;
+    				}
+    			}
+    			return true;
+    		case "or":
+    			for(LogicalExpression expression : kb.getSubexpressions()) {
+    				if(isLogicalExpressionTrue(expression, symbols)) {
+    					return true;
+    				}
+    			}
+    			return false;
+    		case "xor":
+    			boolean trueFound = false;
+    			for(LogicalExpression expression : kb.getSubexpressions()) {
+    				if(isLogicalExpressionTrue(expression, symbols)) {
+    					if(!trueFound) {
+    						trueFound = true;
+    					}
+    					else {
+    						return false;
+    					}
+    				}
+    			}
+    			return trueFound;
+    		case "not":
+    			return !isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols);
+    		case "if":
+    			return (!isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) || isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols));
+    		case "iff":
+    			return ((isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) && isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols)) || (!isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) && !isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols)));
     	}
     	return false;
     }
