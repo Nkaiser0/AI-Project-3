@@ -527,15 +527,19 @@ public class CheckTrueFalse {
 		return true;
 	}
 
-        private static void exit_function(int value) {
-                System.out.println("exiting from checkTrueFalse");
-                  System.exit(value);
-                }
-        
+    private static void exit_function(int value) {
+    	System.out.println("exiting from checkTrueFalse");
+    	System.exit(value);
+    }
+    
+    //returns true if our knowledgebase and statement are true with the given set of boolean assignments
+    //otherwise returns false
     public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean> booleanAssignments) {
     	return (isLogicalExpressionTrue(kb, booleanAssignments) && isLogicalExpressionTrue(statement, booleanAssignments));
     }
     
+    //returns true if the logical expression is true for the given set of symbols
+    //returns false if the expression is false, or if we somehow have an invalid connective
     public static boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean> symbols) {
     	if(kb.getConnective() == null) {
     		return symbols.get(kb.getUniqueSymbol());
