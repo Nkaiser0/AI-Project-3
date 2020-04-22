@@ -1,1 +1,1 @@
-(and a (not b))
+a

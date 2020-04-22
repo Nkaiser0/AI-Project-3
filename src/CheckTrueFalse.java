@@ -151,7 +151,7 @@ public class CheckTrueFalse {
 		//testing
 		
 		boolean entailsStatement = true;
-		boolean entailsInverseStatement = false;
+		boolean entailsInverseStatement = true;
 		
 		HashMap<String, Boolean> symbols = getAllSymbols(knowledge_base, statement);
 		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
@@ -161,7 +161,21 @@ public class CheckTrueFalse {
 				temp >>= 1;
 			}
 			
+			boolean entailSt = entailsStatement(knowledge_base, statement, symbols);
 			
+			LogicalExpression inverse = new LogicalExpression();
+			inverse.setConnective("not");
+			inverse.setSubexpression(statement);
+			
+			boolean entailInv = entailsStatement(knowledge_base, inverse, symbols);
+			
+			
+			if (!entailInv) {
+				entailsInverseStatement = false;
+			}
+			if (!entailSt) {
+				entailsStatement = false;
+			}
 			
 		}
 		
