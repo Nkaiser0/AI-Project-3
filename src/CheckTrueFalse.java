@@ -149,10 +149,23 @@ public class CheckTrueFalse {
 		System.out.println("\n");
 						
 		//testing
-		HashMap<String, Boolean> symbols = getAllSymbols(knowledge_base, statement);
 		
 		boolean entailsStatement = true;
 		boolean entailsInverseStatement = false;
+		
+		HashMap<String, Boolean> symbols = getAllSymbols(knowledge_base, statement);
+		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
+			int temp = i;
+			for (String sym : symbols.keySet()) {
+				symbols.replace(sym, temp%2 != 0);
+				temp >>= 1;
+			}
+			
+			
+			
+		}
+		
+		
 
 		// Definitly True
 		try {
@@ -179,17 +192,7 @@ public class CheckTrueFalse {
 			exit_function(0);
 		}
 
-		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
-			int temp = i;
-			for (String sym : symbols.keySet()) {
-				symbols.replace(sym, temp%2 != 0);
-				temp >>= 1;
-			}
-			for (String sym : symbols.keySet()) {
-				System.out.print(sym + " " + symbols.get(sym) + " ");
-			}
-			System.out.println("");
-		}
+		
 
 	} //end of main
 
