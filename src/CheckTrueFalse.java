@@ -155,23 +155,30 @@ public class CheckTrueFalse {
 		boolean entailsInverseStatement = false;
 
 		// Definitly True
-		if ( entailsStatement && !entailsInverseStatement ) {
-		    System.out.println("definitely true:\nThis should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.");
+		try {
+		    FileWriter fileWriter = new FileWriter("results.txt");
+		    if ( entailsStatement && !entailsInverseStatement ) {
+			fileWriter.write("definitely true:\nThis should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.");
+		    }
+		    // Definitly False
+		    if ( !entailsStatement && entailsInverseStatement ) {
+			fileWriter.write("definitely false:\nThis should be the output if the knowledge base entails the negation of the statement, and the knowledge base does not entail the statement.");
+		    }
+		    // Possibly True of False
+		    if ( !entailsStatement && !entailsInverseStatement ) {
+			fileWriter.write("possibly true, possibly false:\nThis should be the output if the knowledge base entails neither the statement nor the negation of the statement.");
+		    }
+		    // True and False
+		    if ( entailsStatement && entailsInverseStatement ) {
+			fileWriter.write("both true and false: This should be the output if the knowledge base entails both the statement and the negation of the statement.");
+		    }
+		    fileWriter.close();
+		} catch(Exception e) {
+			System.out.println("failed to open results.txt\n");
+			e.printStackTrace();
+			exit_function(0);
 		}
-		// Definitly False
-		if ( !entailsStatement && entailsInverseStatement ) {
-		    System.out.println("definitely false:\nThis should be the output if the knowledge base entails the negation of the statement, and the knowledge base does not entail the statement.");
-		}
-		// Possibly True of False
-		if ( !entailsStatement && !entailsInverseStatement ) {
-		    System.out.println("possibly true, possibly false:\nThis should be the output if the knowledge base entails neither the statement nor the negation of the statement.");
-		}
-		// True and False
-		if ( entailsStatement && entailsInverseStatement ) {
-		    System.out.println("both true and false: This should be the output if the knowledge base entails both the statement and the negation of the statement.");
-		}
-		System.out.println("Error?");
-		
+
 		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
