@@ -571,7 +571,7 @@ public class CheckTrueFalse {
     	if(kb.getConnective() == null) {
     		return symbols.get(kb.getUniqueSymbol());
     	}
-    	switch(kb.getConnective()) {
+    	switch(kb.getConnective().toLowerCase()) {
     		case "and":
     			for(LogicalExpression expression : kb.getSubexpressions()) {
     				if(!isLogicalExpressionTrue(expression, symbols)) {
