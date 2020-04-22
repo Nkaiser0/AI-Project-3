@@ -279,7 +279,7 @@ public class CheckTrueFalse {
 				matchingIndex++;
 			}
 			
-			// read untill the matching ')' into a new string
+			// read until the matching ')' into a new string
 			newSymbol = input_string.substring( 0, matchingIndex );
 			
 			//testing
