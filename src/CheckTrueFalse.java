@@ -1,4 +1,5 @@
 import java.io.*;
+import java.io.ObjectInputStream.GetField;
 import java.util.*;
 
 /**
@@ -6,7 +7,8 @@ import java.util.*;
  *
  */
 public class CheckTrueFalse {
-
+	
+	
 	/**
 	 * @param args
 	 */
@@ -148,6 +150,8 @@ public class CheckTrueFalse {
 						
 		//testing
 		System.out.println("I don't know if the statement is definitely true or definitely false.");
+		
+		
 
 	} //end of main
 
@@ -424,8 +428,44 @@ public class CheckTrueFalse {
 		return true;
 	}
 	
-
-
+	public static HashMap<String, Boolean> getAllSymbols(LogicalExpression knowledge_base, LogicalExpression statement) {
+		HashMap<String, Boolean> knowledgeBaseSymbols = addSymbolsToMap(knowledge_base);
+		HashMap<String, Boolean> statementSymbols = addSymbolsToMap(statement);
+		HashMap<String, Boolean> symbols = new HashMap<String, Boolean>();
+		
+		for (String sym : knowledgeBaseSymbols.keySet()) {
+			if (!symbols.containsKey(sym)) {
+				symbols.put(sym, null);
+			}
+		}
+		for (String sym : statementSymbols.keySet()) {
+			if (!symbols.containsKey(sym)) {
+				symbols.put(sym, null);
+			}
+		}
+		return symbols;
+	}
+	
+	public static HashMap<String, Boolean> addSymbolsToMap(LogicalExpression expression) {
+		HashMap<String, Boolean> symbols = new HashMap<String, Boolean>();
+		
+		if (expression.getConnective() == null) {
+			symbols.put(expression.getUniqueSymbol(), null);
+			return symbols;
+		}
+		
+		for (LogicalExpression subExpression : expression.getSubexpressions()) {
+			HashMap<String, Boolean> newSymbols = addSymbolsToMap(subExpression);
+			
+			for (String symbol : newSymbols.keySet()) {
+				if (!symbols.containsKey(symbol)) {
+					symbols.put(symbol, null);
+				}
+			}
+		}
+		
+		return symbols;
+	}
 
 	/** this function checks to see if a unique symbol is valid */
 	//////////////////// this function should be done and complete
