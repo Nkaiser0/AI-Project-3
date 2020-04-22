@@ -500,7 +500,8 @@ public class CheckTrueFalse {
                 System.out.println("exiting from checkTrueFalse");
                   System.exit(value);
                 }
-    public static boolean entails_statement(LogicalExpression kb, LogicalExpression statement, HashMap booleanAssignments) {
+        
+    public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean> booleanAssignments) {
     	
     	return false;
     }
