@@ -159,7 +159,7 @@ public class CheckTrueFalse {
 		    System.out.println("definitely true:\nThis should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.");
 		}
 		// Definitly False
-		if ( !entailsStatement && ntailsInverseStatement ) {
+		if ( !entailsStatement && entailsInverseStatement ) {
 		    System.out.println("definitely false:\nThis should be the output if the knowledge base entails the negation of the statement, and the knowledge base does not entail the statement.");
 		}
 		// Possibly True of False
