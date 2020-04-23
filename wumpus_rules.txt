@@ -86,6 +86,9 @@
 
 
 # The number of pits can be between 1 and 11, such that there exist at least one safe square to explore other than the first four squares.
+# There is a safe space in the ring around 2 2
+(or (not P_1_3) (not P_2_3) (not P_3_1) (not P_3_2) (not P_3_3))
+
 # Check for at least one pit
 (or P_1_3 P_1_4 P_2_3 P_2_4 P_3_1 P_3_2 P_3_3 P_3_4 P_4_1 P_4_2 P_4_3 P_4_4)
 # Check for more than 11 aka check for at least one empty space of the valid 12 spaces
