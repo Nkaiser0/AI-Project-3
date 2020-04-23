@@ -490,16 +490,19 @@ public class CheckTrueFalse {
 		
 		for (String sym : knowledgeBaseSymbols.keySet()) {
 			if (!symbols.containsKey(sym)) {
-				symbols.put(sym, null);
+				symbols.put(sym, new Boolean[]{null, null});
 			}
 		}
 		for (String sym : statementSymbols.keySet()) {
 			if (!symbols.containsKey(sym)) {
-				symbols.put(sym, null);
+				symbols.put(sym, new Boolean[]{null, null});
 			}
 		}
 		return symbols;
 	}
+	
+	
+
 	
 	public static HashMap<String, Boolean[]> addSymbolsToMap(LogicalExpression expression) {
 		HashMap<String, Boolean[]> symbols = new HashMap<String, Boolean[]>();
