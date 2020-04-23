@@ -1,6 +1,0 @@
-(or A B)
-(or B C)
-(or C D)
-(or D E)
-(or E A)
-
