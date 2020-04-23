@@ -500,18 +500,35 @@ public class CheckTrueFalse {
 		
 		for (String sym : knowledgeBaseSymbols.keySet()) {
 			if (!symbols.containsKey(sym)) {
-				symbols.put(sym, new Boolean[]{null, null});
+				symbols.put(sym, new Boolean[]{null, true});
 			}
 		}
 		for (String sym : statementSymbols.keySet()) {
 			if (!symbols.containsKey(sym)) {
-				symbols.put(sym, new Boolean[]{null, null});
+				symbols.put(sym, new Boolean[]{null, true});
 			}
 		}
+		symbols = setRequiredSymbols(symbols, knowledge_base);
 		return symbols;
 	}
 	
-	
+	public static HashMap<String, Boolean[]> setRequiredSymbols(HashMap<String, Boolean[]> symbs, LogicalExpression knowledge_base) {
+		
+		for (LogicalExpression rule : knowledge_base.getSubexpressions()) {
+			if (rule.getConnective() == null) {
+				if (symbs.containsKey(rule.getUniqueSymbol())) {
+					symbs.replace(rule.getUniqueSymbol(), new Boolean[]{true, false});
+				}
+			}
+			else if (rule.getConnective().equals("not")) {
+				if (symbs.containsKey(rule.getUniqueSymbol())) {
+					symbs.replace(rule.getUniqueSymbol(), new Boolean[]{false, false});
+				}
+			}
+			
+		}
+		return symbs;
+	}
 
 	
 	public static HashMap<String, Boolean[]> addSymbolsToMap(LogicalExpression expression) {
