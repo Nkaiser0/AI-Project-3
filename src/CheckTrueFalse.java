@@ -162,7 +162,7 @@ public class CheckTrueFalse {
 		    	num_to_check++;
 		    }
 		}
-		System.out.println(num_to_check);
+		//System.out.println(num_to_check);
 		for (int i = 0; i<Math.pow(2, num_to_check); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
@@ -525,7 +525,7 @@ public class CheckTrueFalse {
 			for (String key : symbols.keySet()) {
 				try{
 					if (symbols.get(key)[0] != original.get(key)[0] || symbols.get(key)[1] != original.get(key)[1]) {
-						System.out.println(key + " " + symbols.get(key)[0]);
+						//System.out.println(key + " " + symbols.get(key)[0]);
 						changesMade = true;
 					}
 				}

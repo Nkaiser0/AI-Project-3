@@ -1,0 +1,2 @@
+definitely true:
+This should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.
