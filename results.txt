@@ -1,1 +1,2 @@
-both true and false: This should be the output if the knowledge base entails both the statement and the negation of the statement.
+definitely true:
+This should be the output if the knowledge base entails the statement, and the knowledge base does not entail the negation of the statement.
