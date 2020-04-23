@@ -542,22 +542,31 @@ public class CheckTrueFalse {
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("xor")) {
-				/*boolean trueFound = false;
+				boolean trueFound = false;
+				boolean allSymbs = true;
 				for(LogicalExpression subRule : rule.getSubexpressions()) {
-					if(isLogicalExpressionTrue(subRule, symbs) != null && isLogicalExpressionTrue(subRule, symbs)) {
+					if(subRule.getUniqueSymbol() == null) {
+						allSymbs = false;
+						break;
+					}
+					if(symbs.get(subRule.getUniqueSymbol())[0] != null && symbs.get(subRule.getUniqueSymbol())[0]) {
 						if(!trueFound) {
 							trueFound = true;
 						}
 						else {
-							//we found a contradiction
+							//contradiction
 						}
 					}
 				}
-				if(trueFound) {
+				if(allSymbs && trueFound) {
 					for(LogicalExpression subRule : rule.getSubexpressions()) {
-						if
+						if(symbs.get(subRule.getUniqueSymbol())[0] != true) {
+							symbs.get(subRule.getUniqueSymbol())[0] = false;
+							symbs.get(subRule.getUniqueSymbol())[1] = false;
+						}
 					}
-				}*/
+				}
+				
 			}
 		}
 		return symbs;
