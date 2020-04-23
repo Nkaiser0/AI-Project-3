@@ -162,6 +162,7 @@ public class CheckTrueFalse {
 		    	num_to_check++;
 		    }
 		}
+		System.out.println(symbols.size());
 		for (int i = 0; i<Math.pow(2, num_to_check); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
@@ -508,7 +509,31 @@ public class CheckTrueFalse {
 				symbols.put(sym, new Boolean[]{null, true});
 			}
 		}
-		symbols = setRequiredSymbols(symbols, knowledge_base);
+		
+		
+		
+		boolean changesMade = true;
+		
+		while(changesMade) {
+			changesMade = false;
+			HashMap<String, Boolean[]> original = new HashMap<String, Boolean[]>();
+			for (String key : symbols.keySet()) {
+				original.put(key, new Boolean[]{symbols.get(key)[0], symbols.get(key)[1]});
+			}
+			symbols = setRequiredSymbols(symbols, knowledge_base);
+			
+			for (String key : symbols.keySet()) {
+				try{
+					if (symbols.get(key)[0] != original.get(key)[0] || symbols.get(key)[1] != original.get(key)[1]) {
+						changesMade = true;
+					}
+				}
+				catch (NullPointerException e) {
+					changesMade = true;
+				}
+			}
+
+		}
 		return symbols;
 	}
 	
@@ -560,7 +585,7 @@ public class CheckTrueFalse {
 				}
 				if(allSymbs && trueFound) {
 					for(LogicalExpression subRule : rule.getSubexpressions()) {
-						if(symbs.get(subRule.getUniqueSymbol())[0] != true) {
+						if(symbs.get(subRule.getUniqueSymbol())[0] == null || symbs.get(subRule.getUniqueSymbol())[0] != true) {
 							symbs.get(subRule.getUniqueSymbol())[0] = false;
 							symbs.get(subRule.getUniqueSymbol())[1] = false;
 						}

@@ -1,2 +1,1 @@
-possibly true, possibly false:
-This should be the output if the knowledge base entails neither the statement nor the negation of the statement.
+both true and false: This should be the output if the knowledge base entails both the statement and the negation of the statement.
