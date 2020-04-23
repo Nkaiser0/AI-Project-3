@@ -507,15 +507,25 @@ public class CheckTrueFalse {
 		for (LogicalExpression rule : knowledge_base.getSubexpressions()) {
 			if (rule.getConnective() == null) {
 				if (symbs.containsKey(rule.getUniqueSymbol())) {
+					 if(symbs.get(rule.getUniqueSymbol())[1] == false && symbs.get(rule.getUniqueSymbol())[0] == false) {
+						 //we found a contradiction
+					 }
 					symbs.replace(rule.getUniqueSymbol(), new Boolean[]{true, false});
 				}
 			}
-			else if (rule.getConnective().equals("not")) {
-				if (symbs.containsKey(rule.getUniqueSymbol())) {
+			else if (rule.getConnective().toLowerCase().equals("not")) {
+				if (rule.getSubexpressions().get(0).getUniqueSymbol() != null && symbs.containsKey(rule.getSubexpressions().get(0).getUniqueSymbol())) {
+					if(symbs.get(rule.getUniqueSymbol()) != null && symbs.get(rule.getUniqueSymbol())[1] == false && symbs.get(rule.getUniqueSymbol())[0] == true) {
+						 //we found a contradiction
+					 }
 					symbs.replace(rule.getUniqueSymbol(), new Boolean[]{false, false});
 				}
 			}
-			
+			else if (rule.getConnective().toLowerCase().equals("if")) {
+				if (rule.getSubexpressions().get(0).getUniqueSymbol() != null && symbs.get(rule.getUniqueSymbol()) != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol())[0] == true) {
+					symbs = setRequiredSymbols(symbs, rule.getSubexpressions().get(1));
+				}
+			}
 		}
 		return symbs;
 	}
