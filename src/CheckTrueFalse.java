@@ -537,10 +537,27 @@ public class CheckTrueFalse {
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("and")) {
-				
+				for(LogicalExpression subRule : rule.getSubexpressions()) {
+					symbs = setRequiredSymbols(symbs, subRule);
+				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("xor")) {
-				
+				/*boolean trueFound = false;
+				for(LogicalExpression subRule : rule.getSubexpressions()) {
+					if(isLogicalExpressionTrue(subRule, symbs) != null && isLogicalExpressionTrue(subRule, symbs)) {
+						if(!trueFound) {
+							trueFound = true;
+						}
+						else {
+							//we found a contradiction
+						}
+					}
+				}
+				if(trueFound) {
+					for(LogicalExpression subRule : rule.getSubexpressions()) {
+						if
+					}
+				}*/
 			}
 		}
 		return symbs;
