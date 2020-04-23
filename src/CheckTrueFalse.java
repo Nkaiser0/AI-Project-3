@@ -153,11 +153,11 @@ public class CheckTrueFalse {
 		boolean entailsStatement = true;
 		boolean entailsInverseStatement = true;
 		
-		HashMap<String, Boolean> symbols = getAllSymbols(knowledge_base, statement);
+		HashMap<String, Boolean[]> symbols = getAllSymbols(knowledge_base, statement);
 		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
-				symbols.replace(sym, temp%2 != 0);
+				symbols.replace(sym, new Boolean[]{temp%2 != 0, symbols.get(sym)[1]});
 				temp >>= 1;
 			}
 			
@@ -483,10 +483,10 @@ public class CheckTrueFalse {
 		return true;
 	}
 	
-	public static HashMap<String, Boolean> getAllSymbols(LogicalExpression knowledge_base, LogicalExpression statement) {
-		HashMap<String, Boolean> knowledgeBaseSymbols = addSymbolsToMap(knowledge_base);
-		HashMap<String, Boolean> statementSymbols = addSymbolsToMap(statement);
-		HashMap<String, Boolean> symbols = new HashMap<String, Boolean>();
+	public static HashMap<String, Boolean[]> getAllSymbols(LogicalExpression knowledge_base, LogicalExpression statement) {
+		HashMap<String, Boolean[]> knowledgeBaseSymbols = addSymbolsToMap(knowledge_base);
+		HashMap<String, Boolean[]> statementSymbols = addSymbolsToMap(statement);
+		HashMap<String, Boolean[]> symbols = new HashMap<String, Boolean[]>();
 		
 		for (String sym : knowledgeBaseSymbols.keySet()) {
 			if (!symbols.containsKey(sym)) {
@@ -501,8 +501,8 @@ public class CheckTrueFalse {
 		return symbols;
 	}
 	
-	public static HashMap<String, Boolean> addSymbolsToMap(LogicalExpression expression) {
-		HashMap<String, Boolean> symbols = new HashMap<String, Boolean>();
+	public static HashMap<String, Boolean[]> addSymbolsToMap(LogicalExpression expression) {
+		HashMap<String, Boolean[]> symbols = new HashMap<String, Boolean[]>();
 		
 		if (expression.getConnective() == null) {
 			symbols.put(expression.getUniqueSymbol(), null);
@@ -510,7 +510,7 @@ public class CheckTrueFalse {
 		}
 		
 		for (LogicalExpression subExpression : expression.getSubexpressions()) {
-			HashMap<String, Boolean> newSymbols = addSymbolsToMap(subExpression);
+			HashMap<String, Boolean[]> newSymbols = addSymbolsToMap(subExpression);
 			
 			for (String symbol : newSymbols.keySet()) {
 				if (!symbols.containsKey(symbol)) {
@@ -521,6 +521,7 @@ public class CheckTrueFalse {
 		
 		return symbols;
 	}
+	
 
 	/** this function checks to see if a unique symbol is valid */
 	//////////////////// this function should be done and complete
@@ -558,7 +559,7 @@ public class CheckTrueFalse {
     
     //returns true if our knowledgebase and statement are true with the given set of boolean assignments
     //otherwise returns false
-    public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean> booleanAssignments) {
+    public static boolean entailsStatement(LogicalExpression kb, LogicalExpression statement, HashMap<String, Boolean[]> booleanAssignments) {
     	if(!isLogicalExpressionTrue(kb, booleanAssignments)) {
     		return true;
     	}
@@ -567,9 +568,9 @@ public class CheckTrueFalse {
     
     //returns true if the logical expression is true for the given set of symbols
     //returns false if the expression is false, or if we somehow have an invalid connective
-    public static boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean> symbols) {
+    public static boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean[]> symbols) {
     	if(kb.getConnective() == null) {
-    		return symbols.get(kb.getUniqueSymbol());
+    		return symbols.get(kb.getUniqueSymbol())[0];
     	}
     	switch(kb.getConnective().toLowerCase()) {
     		case "and":
