@@ -16,8 +16,11 @@
 
 
 # If there is stench at square (i,j), there is a monster at one of the adjacent squares.
+(if S_1_2 M_1_3)
 (if S_1_3 (or M_1_2 M_1_4 M_2_3))
 (if S_1_4 (or M_1_3 M_2_4))
+(if S_2_1 M_3_1)
+(if S_2_2 (or M_3_2 M_2_3))
 (if S_2_3 (or M_1_3 M_3_3 M_2_2 M_2_4))
 (if S_2_4 (or M_1_4 M_3_4 M_2_3))
 (if S_3_1 (or M_2_1 M_4_1 M_3_2))
@@ -48,8 +51,11 @@
 
 
 # If there is breeze at square (i,j), there is a pit at one or more of the adjacent squares.
+(if B_1_2 P_1_3)
 (if B_1_3 (or P_1_2 P_1_4 P_2_3))
 (if B_1_4 (or P_1_3 P_2_4))
+(if B_2_1 P_3_1)
+(if B_2_2 (or P_3_2 P_2_3))
 (if B_2_3 (or P_1_3 P_3_3 P_2_2 P_2_4))
 (if B_2_4 (or P_1_4 P_3_4 P_2_3))
 (if B_3_1 (or P_2_1 P_4_1 P_3_2))
