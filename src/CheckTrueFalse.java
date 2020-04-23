@@ -532,9 +532,13 @@ public class CheckTrueFalse {
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("if")) {
-				if (rule.getSubexpressions().get(0).getUniqueSymbol() != null && symbs.get(rule.getUniqueSymbol()) != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol())[0] == true) {
+				if (rule.getSubexpressions().get(0).getUniqueSymbol() != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol()) != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol())[0] == true) {
 					symbs = setRequiredSymbols(symbs, rule.getSubexpressions().get(1));
 				}
+			}
+			else if (rule.getConnective().toLowerCase().equals("and")) {
+			}
+			else if (rule.getConnective().toLowerCase().equals("xor")) {
 			}
 		}
 		return symbs;
