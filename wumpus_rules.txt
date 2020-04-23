@@ -81,6 +81,8 @@
 (not P_1_2)
 (not P_2_1)
 (not P_2_2)
+(not S_1_1)
+(not B_1_1)
 
 
 # The number of pits can be between 1 and 11, such that there exist at least one safe square to explore other than the first four squares.

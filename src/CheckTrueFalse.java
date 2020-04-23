@@ -165,7 +165,7 @@ public class CheckTrueFalse {
 		for (int i = 0; i<Math.pow(2, num_to_check); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
-			    if (!symbols.get(sym)[1]) {
+			    if (symbols.get(sym)[1]) {
 				symbols.replace(sym, new Boolean[]{temp%2 != 0, symbols.get(sym)[1]});
 				temp >>= 1;
 			    }
@@ -528,7 +528,7 @@ public class CheckTrueFalse {
 					if(symbs.get(rule.getUniqueSymbol()) != null && symbs.get(rule.getUniqueSymbol())[1] == false && symbs.get(rule.getUniqueSymbol())[0] == true) {
 						 //we found a contradiction
 					 }
-					symbs.replace(rule.getUniqueSymbol(), new Boolean[]{false, false});
+					symbs.replace(rule.getSubexpressions().get(0).getUniqueSymbol(), new Boolean[]{false, false});
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("if")) {
