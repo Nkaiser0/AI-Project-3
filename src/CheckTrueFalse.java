@@ -152,13 +152,23 @@ public class CheckTrueFalse {
 		
 		boolean entailsStatement = true;
 		boolean entailsInverseStatement = true;
-		
+
+		// Boolean[0] is true/false boolean[1] is hardcoded or not So if true we edit
 		HashMap<String, Boolean[]> symbols = getAllSymbols(knowledge_base, statement);
-		for (int i = 0; i<Math.pow(2, symbols.keySet().size()); i++) {
+		int num_to_check = 0;
+		for (Boolean[] b : symbols.values()) {
+		    //System.out.println(b[1]);
+		    if (b[1]) {
+		    	num_to_check++;
+		    }
+		}
+		for (int i = 0; i<Math.pow(2, num_to_check); i++) {
 			int temp = i;
 			for (String sym : symbols.keySet()) {
+			    if (!symbols.get(sym)[1]) {
 				symbols.replace(sym, new Boolean[]{temp%2 != 0, symbols.get(sym)[1]});
 				temp >>= 1;
+			    }
 			}
 			
 			boolean entailSt = entailsStatement(knowledge_base, statement, symbols);
