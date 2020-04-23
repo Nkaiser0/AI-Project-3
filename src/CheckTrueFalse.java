@@ -532,13 +532,15 @@ public class CheckTrueFalse {
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("if")) {
-				if (rule.getSubexpressions().get(0).getUniqueSymbol() != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol()) != null && symbs.get(rule.getSubexpressions().get(0).getUniqueSymbol())[0] == true) {
+				if (isLogicalExpressionTrue(rule.getSubexpressions().get(0), symbs) != null && isLogicalExpressionTrue(rule.getSubexpressions().get(0), symbs)) {
 					symbs = setRequiredSymbols(symbs, rule.getSubexpressions().get(1));
 				}
 			}
 			else if (rule.getConnective().toLowerCase().equals("and")) {
+				
 			}
 			else if (rule.getConnective().toLowerCase().equals("xor")) {
+				
 			}
 		}
 		return symbs;
@@ -612,29 +614,45 @@ public class CheckTrueFalse {
     
     //returns true if the logical expression is true for the given set of symbols
     //returns false if the expression is false, or if we somehow have an invalid connective
-    public static boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean[]> symbols) {
+    public static Boolean isLogicalExpressionTrue(LogicalExpression kb, HashMap<String, Boolean[]> symbols) {
     	if(kb.getConnective() == null) {
     		return symbols.get(kb.getUniqueSymbol())[0];
     	}
     	switch(kb.getConnective().toLowerCase()) {
     		case "and":
     			for(LogicalExpression expression : kb.getSubexpressions()) {
-    				if(!isLogicalExpressionTrue(expression, symbols)) {
+    				Boolean isTrue = isLogicalExpressionTrue(expression, symbols);
+    				if(isTrue == null) {
+    					return null;
+    				}
+    				if(!isTrue) {
     					return false;
     				}
     			}
     			return true;
     		case "or":
+    			int numNull = 0;
     			for(LogicalExpression expression : kb.getSubexpressions()) {
-    				if(isLogicalExpressionTrue(expression, symbols)) {
+    				Boolean isTrue = isLogicalExpressionTrue(expression, symbols);
+    				if(isTrue == null) {
+    					numNull++;
+    				}
+    				if(isTrue) {
     					return true;
     				}
+    			}
+    			if(numNull == kb.getSubexpressions().size()) {
+    				return null;
     			}
     			return false;
     		case "xor":
     			boolean trueFound = false;
     			for(LogicalExpression expression : kb.getSubexpressions()) {
-    				if(isLogicalExpressionTrue(expression, symbols)) {
+    				Boolean isTrue = isLogicalExpressionTrue(expression, symbols);
+    				if(isTrue == null) {
+    					return null;
+    				}
+    				if(isTrue) {
     					if(!trueFound) {
     						trueFound = true;
     					}
@@ -645,11 +663,25 @@ public class CheckTrueFalse {
     			}
     			return trueFound;
     		case "not":
-    			return !isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols);
+    			Boolean isTrue = isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols);
+    			if(isTrue == null) {
+    				return null;
+    			}
+    			return !isTrue;
     		case "if":
-    			return (!isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) || isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols));
+    			Boolean isTrue1 = isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols);
+    			Boolean isTrue2 = isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols);
+    			if(isTrue1 == null || isTrue2 == null) {
+    				return null;
+    			}
+    			return (!isTrue1 || isTrue2);
     		case "iff":
-    			return ((isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) && isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols)) || (!isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols) && !isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols)));
+    			Boolean isTrue3 = isLogicalExpressionTrue(kb.getSubexpressions().get(0), symbols);
+    			Boolean isTrue4 = isLogicalExpressionTrue(kb.getSubexpressions().get(1), symbols);
+    			if(isTrue3 == null || isTrue4 == null) {
+    				return null;
+    			}
+    			return ((isTrue3 && isTrue4) || (!isTrue3 && !isTrue4));
     	}
     	return false;
     }
